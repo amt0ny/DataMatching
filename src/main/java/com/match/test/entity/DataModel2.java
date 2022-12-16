@@ -17,10 +17,5 @@ public class DataModel2 {
 	private String name;
 	private String panCard;
 	private String aadharCard;
-//
-//	public DataModel2(String panCard) {
-//		super();
-//		this.panCard = panCard;
-//	}
 
 }

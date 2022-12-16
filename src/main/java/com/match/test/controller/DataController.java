@@ -27,10 +27,10 @@ public class DataController {
 	}
 	
 	@GetMapping("/searchPan")
-	public List<String> getPanCards(@RequestBody DataModel2 model) {
-		String panCard = model.getPanCard();
-		List<String> panCardList = iDataService.searchPanCard(panCard);
-		return panCardList;
+	public String getPanCards(@RequestBody DataModel2 model) {
+		String pan = model.getPanCard();
+		String panCard = iDataService.searchPanCard(pan);
+		return panCard;
 	}
 	
 	@GetMapping("/getByName")

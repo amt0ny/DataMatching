@@ -8,7 +8,7 @@ public interface IDataService {
 
 	void addDataModel(DataModel2 dataModel);
 
-	List<String> searchPanCard(String panCard);
+	String searchPanCard(String panCard);
 	
 	
 

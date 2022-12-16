@@ -25,9 +25,8 @@ public class DataServiceImpl implements IDataService {
 	}
 
 	@Override
-	public List<String> searchPanCard(String panCard) {
+	public String searchPanCard(String panCard) {
 		List<String> panCardList = modelRepo.findByPlaceContaining(panCard);
-		System.out.println(panCardList);
 		
 		int count = 0;
 		int bestMatch = 0;
@@ -41,8 +40,8 @@ public class DataServiceImpl implements IDataService {
 			}
 			count++;
 		}
-		System.out.println(bestMatch + "  " + perfectMatch );
-		return panCardList;
+
+		return perfectMatch;
 	}
 
 }

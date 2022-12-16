@@ -45,4 +45,9 @@ public class DataServiceImpl implements IDataService {
 		return panCardList;
 	}
 
+	@Override
+	public List<DataModel2> findAll() {
+		return modelRepo.findAll();
+	}
+
 }

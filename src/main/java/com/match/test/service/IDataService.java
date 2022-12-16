@@ -10,6 +10,6 @@ public interface IDataService {
 
 	List<String> searchPanCard(String panCard);
 	
-	
+	List<DataModel2> findAll();
 
 }

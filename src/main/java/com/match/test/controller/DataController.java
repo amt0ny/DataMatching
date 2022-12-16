@@ -1,5 +1,6 @@
 package com.match.test.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.match.test.entity.DataModel2;
 import com.match.test.service.IDataService;
+
+
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 @RestController
 public class DataController {
@@ -27,6 +31,21 @@ public class DataController {
 		String panCard = model.getPanCard();
 		List<String> panCardList = iDataService.searchPanCard(panCard);
 		return panCardList;
+	}
+	
+	@GetMapping("/getByName")
+	public List<String> getByNameHandler(@RequestBody DataModel2 dataModel2) {
+         
+		List<String> list = new ArrayList<>();
+		
+		iDataService.findAll().forEach((e)->{
+			int ratio = FuzzySearch.ratio(dataModel2.getName(),e.getName());
+			if(ratio>70) {
+				list.add(e.getName());
+			}
+		});
+	
+		return list;
 	}
 
 }

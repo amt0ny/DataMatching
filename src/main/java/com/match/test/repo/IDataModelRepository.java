@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.match.test.entity.DataModel2;
 
 
+
 @Repository
 public interface IDataModelRepository extends JpaRepository<DataModel2, Integer>{
 
@@ -18,6 +19,6 @@ public interface IDataModelRepository extends JpaRepository<DataModel2, Integer>
 	 @Query("Select d.panCard from DataModel2 d where d.panCard like %:panCard%")
      List<String> findByPlaceContaining(@Param("panCard")String panCard);
 
-	
+	 List<DataModel2> findByName (DataModel2 dataModel2);
 
 }

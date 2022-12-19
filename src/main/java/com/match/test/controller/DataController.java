@@ -1,6 +1,5 @@
 package com.match.test.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.match.test.entity.DataModel2;
 import com.match.test.service.IDataService;
 
-
-import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 @RestController
 public class DataController {
@@ -22,30 +18,22 @@ public class DataController {
 	private IDataService iDataService;
 	
 	@PostMapping("/addData")
-	public void addData(@RequestBody DataModel2 dataModel) {
-		iDataService.addDataModel(dataModel);
+	public void addData() {
+		iDataService.addDataModel();
 	}
 	
-	@GetMapping("/searchPan")
+	@GetMapping("/searchPanCard")
 	public String getPanCards(@RequestBody DataModel2 model) {
 		String pan = model.getPanCard();
 		String panCard = iDataService.searchPanCard(pan);
 		return panCard;
 	}
 	
-	@GetMapping("/getByName")
-	public List<String> getByNameHandler(@RequestBody DataModel2 dataModel2) {
-         
-		List<String> list = new ArrayList<>();
-		
-		iDataService.findAll().forEach((e)->{
-			int ratio = FuzzySearch.ratio(dataModel2.getName(),e.getName());
-			if(ratio>70) {
-				list.add(e.getName());
-			}
-		});
-	
-		return list;
+	@GetMapping("/searchByName")
+	public List<String> getName(@RequestBody DataModel2 model) {
+		String name = model.getName();
+		List<String> userNameList = iDataService.searchName(name);
+		return userNameList;
 	}
 
 }

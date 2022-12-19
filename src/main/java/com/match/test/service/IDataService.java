@@ -6,10 +6,11 @@ import com.match.test.entity.DataModel2;
 
 public interface IDataService {
 
-	void addDataModel(DataModel2 dataModel);
-
 	String searchPanCard(String panCard);
-	
-	List<DataModel2> findAll();
+
+	List<String> searchName(String name);
+
+	void addDataModel();
+
 
 }

@@ -1,5 +1,6 @@
 package com.match.test.service;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,12 @@ public class DataServiceImpl implements IDataService {
 	@Autowired
 	private IDataModelRepository modelRepo;
 
+	/**
+	 * This method is to add big 'Data' inside 'Database' using for loop In this
+	 * method 'Aadhar-Card','Pancard' and 'Id' will be unique every time but name
+	 * will be same every If we want to add different name then we need to change
+	 * 'name'
+	 */
 	@Override
 	public void addDataModel() {
 
@@ -36,26 +43,33 @@ public class DataServiceImpl implements IDataService {
 		}
 	}
 
+	/**
+	 * This method contains implementation of search a 'Pancard' using MySQL "LIKE"
+	 * Keyword and Fuzzy search. Here we'll store 'Pancard' similar to our input
+	 * 'Pancard' with 70% similarities or more
+	 */
 	@Override
-	public String searchPanCard(String panCard) {
+	public List<String> searchPanCard(String panCard) {
 		List<String> panCardList = modelRepo.findByPlaceContaining(panCard);
-
-		System.out.println(panCardList);
+		List<String> similarPanList = new ArrayList<>();
 		int count = 0;
 		int bestMatch = 0;
 		String perfectMatch = null;
 
 		while (count != panCardList.size()) {
 			int matchPercentage = FuzzySearch.ratio(panCardList.get(count), panCard);
-			if (bestMatch < matchPercentage) {
-				bestMatch = matchPercentage;
-				perfectMatch = panCardList.get(count);
+			if (70 < matchPercentage) {
+				similarPanList.add(panCardList.get(count));
 			}
 			count++;
 		}
-		return perfectMatch;
+		return similarPanList;
 	}
 
+	/**
+	 * This method is to search similar 'Names' like 'INPUT' with 'Fuzzy' algo and
+	 * It will return a list of 'Names' similar to our 'INPUT'
+	 */
 	@Override
 	public List<String> searchName(String name) {
 
@@ -75,5 +89,34 @@ public class DataServiceImpl implements IDataService {
 		return matchingNameList;
 
 	}
+
+	/**
+	 * This method is to search similar 'Names' and 'PandCard' like 'INPUT' we got from postman with 'Fuzzy' algo and
+	 * It will return a list of 'Name' and 'PanCard' similar to our 'INPUT'
+	 */
+	@Override
+	public List<String> searchByNameAndPan(DataModel2 model) {
+		List<String> modelList = new ArrayList<>();
+		String bestNameMatch;
+		String bestPancardMatch;
+		modelRepo.findAll().forEach((e)->{
+			String name = e.getName().substring(0, 3);
+			String panCard = e.getPanCard().substring(0, 5);
+			int matchRatio =FuzzySearch.ratio(model.getName()+model.getPanCard(), name+ panCard);
+			
+			if (matchRatio>=80 && matchRatio != 100) {
+				modelList.add("Name : "+e.getName()+" PanCard : "+e.getPanCard());
+			}
+		});
+		
+		return modelList;
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

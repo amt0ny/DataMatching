@@ -4,13 +4,18 @@ import java.util.List;
 
 import com.match.test.entity.DataModel2;
 
+/**
+ * This Interface contains all abstract methods of 'DataServiceImpl' class
+ */
 public interface IDataService {
 
-	String searchPanCard(String panCard);
+	public List<String> searchPanCard(String panCard);
 
-	List<String> searchName(String name);
+	public List<String> searchName(String name);
 
-	void addDataModel();
+	public void addDataModel();
+
+	public List<String> searchByNameAndPan(DataModel2 model);
 
 
 }

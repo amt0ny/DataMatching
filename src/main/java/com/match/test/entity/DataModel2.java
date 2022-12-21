@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @Entity
 public class DataModel2 {
 
+	/**
+	 * Data attributes
+	 */
 	@Id
 	private Integer id;
 	private String name;

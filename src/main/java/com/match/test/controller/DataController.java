@@ -50,9 +50,7 @@ public class DataController {
 	
 	/**
 	 * This API is used to search Users by two small part of 'Pan-card' and 'Name'
-	 * Ex: Name: Pritam-> Pri,  Pan-card: PA1K241SK-> PA1K2
-	 * 
-	 * 	 
+	 * Ex: Name: Pritam-> Pri,  Pan-card: PA1K241SK-> PA1K2	 
 	 */
 	@GetMapping("/getByNameAndPan")
 	public List<String> getByNameAndPan(@RequestBody DataModel2 model) {

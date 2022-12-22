@@ -1,12 +1,12 @@
 package com.match.test.service;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.match.test.entity.DataModel2;
 import com.match.test.repo.IDataModelRepository;
+import com.match.test.response.ResponseMessage;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 @Service
@@ -18,29 +18,28 @@ public class DataServiceImpl implements IDataService {
 	/**
 	 * This method is to add big 'Data' inside 'Database' using for loop In this
 	 * method 'Aadhar-Card','Pancard' and 'Id' will be unique every time but name
-	 * will be same every If we want to add different name then we need to change
+	 * will be same every time. If we want to add different name then we need to change
 	 * 'name'
 	 */
 	@Override
-	public void addDataModel() {
+	public String addDataModel(String name) {
 
 		DataModel2 dataModel = new DataModel2();
-		long aadhar = 100010100030L;
-		int id = 100030;
-		int pan = 0;
+		long aadhar = 100030100030L;
+		int pan = 1;
 
-		for (int i = 0; i < 20000; i++) {
-			dataModel.setId(id);
+		for (int i = 0; i < 2; i++) {
 			dataModel.setAadharCard(aadhar + "");
-			dataModel.setName("Dhananjay");
-			dataModel.setPanCard("INK" + pan + "PAN");
+			dataModel.setName(name);
+			dataModel.setPanCard("INK" + pan + "SRR");
 
 			modelRepo.save(dataModel);
-
-			id++;
 			aadhar++;
 			pan++;
 		}
+		return "Data Added Successfully";
+		
+		
 	}
 
 	/**
@@ -53,12 +52,10 @@ public class DataServiceImpl implements IDataService {
 		List<String> panCardList = modelRepo.findByPlaceContaining(panCard);
 		List<String> similarPanList = new ArrayList<>();
 		int count = 0;
-		int bestMatch = 0;
-		String perfectMatch = null;
 
 		while (count != panCardList.size()) {
 			int matchPercentage = FuzzySearch.ratio(panCardList.get(count), panCard);
-			if (70 < matchPercentage) {
+			if (70 <= matchPercentage) {
 				similarPanList.add(panCardList.get(count));
 			}
 			count++;
@@ -75,48 +72,80 @@ public class DataServiceImpl implements IDataService {
 
 		List<DataModel2> modelList = modelRepo.findAll();
 		int count = 0;
-		int bestMatch = 0;
-		String perfectName = null;
 		List<String> matchingNameList = new ArrayList<>();
 		while (count != modelList.size()) {
-			int matchPercentage = FuzzySearch.ratio(modelList.get(count).getName(), name);
-			if (70 < matchPercentage) {
+			int matchPercentage = FuzzySearch.ratio(modelList.get(count).getName(), name.trim());
+			if (70 <= matchPercentage) {
 				matchingNameList.add(modelList.get(count).getName());
 			}
 			count++;
 		}
-
 		return matchingNameList;
 
 	}
 
 	/**
-	 * This method is to search similar 'Names' and 'PandCard' like 'INPUT' we got from postman with 'Fuzzy' algo and
-	 * It will return a list of 'Name' and 'PanCard' similar to our 'INPUT'
+	 * This method is to search similar 'Names' and 'PandCard' like 'INPUT' we got
+	 * from postman with 'Fuzzy' algo and It will return a list of 'Name' and
+	 * 'PanCard' similar to our 'INPUT'
 	 */
 	@Override
 	public List<String> searchByNameAndPan(DataModel2 model) {
+
 		List<String> modelList = new ArrayList<>();
-		String bestNameMatch;
-		String bestPancardMatch;
-		modelRepo.findAll().forEach((e)->{
-			String name = e.getName().substring(0, 3);
-			String panCard = e.getPanCard().substring(0, 5);
-			int matchRatio =FuzzySearch.ratio(model.getName()+model.getPanCard(), name+ panCard);
-			
-			if (matchRatio>=80 && matchRatio != 100) {
-				modelList.add("Name : "+e.getName()+" PanCard : "+e.getPanCard());
+		modelRepo.findAll().forEach((e) -> {
+			int matchRatio = FuzzySearch.ratio(model.getName().trim() + model.getPanCard().trim(),
+					e.getName().substring(0, 3) + e.getPanCard().substring(0, 5));
+			System.out.println(e.getName().substring(0, 3) + e.getPanCard().substring(0, 5));
+			if (matchRatio >= 80) {
+				modelList.add("Name : " + e.getName() + " PanCard : " + e.getPanCard());
 			}
 		});
-		
+
 		return modelList;
 	}
-	
-	
-	
-	
-	
-	
-	
 
+	/**
+	 * This method has implementation of 'nullCheckForPancard()'
+	 */
+	public ResponseMessage nullCheckForPancard(String pan, String responseMessage) {
+
+		ResponseMessage responseMessage2 = new ResponseMessage();
+
+		if (pan == null) {
+			responseMessage2.setMessage("Pancard Cannot be Empty");
+			return responseMessage2;
+		} else {
+			responseMessage2.setMessage(responseMessage);
+			return responseMessage2;
+		}
+
+	}
+
+	/**
+	 * This method has implementation of a method 'nullCheckForPancardAndAadharCard'
+	 * to check Pan-Card and Aadhar-Card Cannot be Empty(null)
+	 */
+	public ResponseMessage nullCheckForPancardAndAadharCard(String pan, String aadharCard, String responseMessage) {
+
+		ResponseMessage responseMessage2 = new ResponseMessage();
+
+		if (pan == null || aadharCard == null) {
+			responseMessage2.setMessage("Pancard or AadharCard Cannot be Empty");
+			return responseMessage2;
+		} else {
+			responseMessage2.setMessage(responseMessage);
+			return responseMessage2;
+		}
+	}
+
+	/**
+	 * This method has implementation of 'findByPancardAndAadharCard()' method
+	 * available inside 'IDataService'
+	 */
+	@Override
+	public DataModel2 findByPancardAndAadharCard(String pancard, String aadharCard) {
+
+		return modelRepo.findByPanCardAndAadharCard(pancard, aadharCard);
+	}
 }

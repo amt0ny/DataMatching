@@ -15,5 +15,10 @@ public interface IDataModelRepository extends JpaRepository<DataModel2, Integer>
 	 */
 	@Query("Select d.panCard from DataModel2 d where d.panCard like %:panCard%")
 	List<String> findByPlaceContaining(@Param("panCard") String panCard);
+	
+	/**
+	 * This is the method also coming from 'JpaRepository' to find User-data using both 'PanCard' and 'AadharCard'
+	 */
+	DataModel2 findByPanCardAndAadharCard(@Param("panCard") String panCard, @Param("aadharCard") String aadharCard);
 
 }

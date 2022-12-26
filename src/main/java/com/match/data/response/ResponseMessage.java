@@ -1,6 +1,7 @@
-package com.match.test.response;
+package com.match.data.response;
 
-import com.match.test.response.ResponseMessage;
+import com.match.data.response.ResponseMessage;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

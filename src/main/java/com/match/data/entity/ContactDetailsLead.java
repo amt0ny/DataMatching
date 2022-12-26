@@ -1,4 +1,4 @@
-package com.match.test.entity;
+package com.match.data.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;

@@ -1,8 +1,8 @@
-package com.match.test.repo;
+package com.match.data.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.match.test.entity.ContactDetailsLead;
+import com.match.data.entity.ContactDetailsLead;
 
 public interface IContactDetailsRepo extends JpaRepository<ContactDetailsLead, Long>{
 

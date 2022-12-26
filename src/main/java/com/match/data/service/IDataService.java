@@ -1,8 +1,9 @@
-package com.match.test.service;
+package com.match.data.service;
 
 import java.util.List;
-import com.match.test.entity.DataModel2;
-import com.match.test.response.ResponseMessage;
+
+import com.match.data.entity.DataModel2;
+import com.match.data.response.ResponseMessage;
 
 
 /**

@@ -1,11 +1,12 @@
-package com.match.test.repo;
+package com.match.data.repo;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.match.test.entity.DataModel2;
+
+import com.match.data.entity.DataModel2;
 
 @Repository
 public interface IDataModelRepository extends JpaRepository<DataModel2, Integer> {

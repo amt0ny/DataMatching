@@ -1,4 +1,4 @@
-package com.match.test.entity;
+package com.match.data.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

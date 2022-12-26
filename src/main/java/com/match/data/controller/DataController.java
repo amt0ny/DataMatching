@@ -1,4 +1,4 @@
-package com.match.test.controller;
+package com.match.data.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
-import com.match.test.entity.DataModel2;
-import com.match.test.response.ResponseMessage;
-import com.match.test.service.IDataService;
+import com.match.data.entity.DataModel2;
+import com.match.data.response.ResponseMessage;
+import com.match.data.service.IDataService;
+
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -62,13 +63,13 @@ public class DataController {
 
 	/**
 	 * This API is used to search Users by two small part of 'Pan-card' and 'Name'
-	 * Ex: Name: Pritam-> Pri, Pan-card: PA1K241SK-> PA1K2
+	 *  Ex: Name: Pritam-> Pri, Pan-card: PA1K241SK-> PA1K2
 	 */
 	@GetMapping(path = "/getByNameAndPan", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<String> getByNameAndPan(@RequestBody String model) {
 		log.info("getByNameAndPan method start");
 		DataModel2 dataModel3 = gson.fromJson(model, DataModel2.class);
-		System.out.println("DataModel  = "+dataModel3);
+		System.out.println("DataModel  = " + dataModel3);
 		List<String> resultList = iDataService.searchByNameAndPan(dataModel3);
 		log.info("getByNameAndPan method end");
 		return resultList;

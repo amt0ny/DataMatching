@@ -1,4 +1,4 @@
-package com.match.test.service;
+package com.match.test.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.match.test.entity.DataModel2;
 import com.match.test.repo.IDataModelRepository;
 import com.match.test.response.ResponseMessage;
+import com.match.test.service.IDataService;
+
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 @Service
@@ -38,7 +40,6 @@ public class DataServiceImpl implements IDataService {
 			pan++;
 		}
 		return "Data Added Successfully";
-		
 		
 	}
 

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.type.TrueFalseType;
 
@@ -16,7 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class DataModel2 {
+@Table(name="DataModel2")
+public class DataModel2{
 
 	/**
 	 * Data attributes

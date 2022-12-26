@@ -47,12 +47,6 @@ public interface IDataService {
 	 */
 	public  ResponseMessage nullCheckForPancardAndAadharCard(String pan, String aadharCard, String responseMessage);
 
-	/**
-	 * This method is to add big 'Data' inside 'Database' using for loop In this
-	 * method 'Aadhar-Card','Pancard' and 'Id' will be unique every time but name
-	 * will be same every time. If we want to add different name then we need to change
-	 * 'name'
-	 */
 
 
 }
